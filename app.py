@@ -15,7 +15,6 @@ def load_data(nrows):
 imdb = pd.read_csv("datafram.csv")
 
 
-# imdb = pd.read_csv('datafram.csv')
 ## --------------  ## -----------------------Déclaration de mes variables : 
 
 # I Convert my Datafram title colomn to list 
@@ -48,7 +47,8 @@ for i in imdb["Origin language"]:
 # For my slide bar duration between 60min and 400min  
 time = [i for i in range (60,400, 30)] 
 # For rating movie filter 
-score = [i for i in range(11)]
+score = [i for i in range(8,11,1)]
+
 
 
 # Titre de la page
@@ -77,33 +77,33 @@ if checkmovie :
     
 # Creation des Df avec les différents filtres ( Par Durée, par films, par acteurs, par pays, par langue ou par catégorie)
     
-    groupe = duration or movie or choose_actors or country or category or language or note
+# Instentiation de mon mask que j'utilise pour filtre mon df 
+    mask = pd.Series(True, index=imdb.index)
     
-    if duration > 60 :
-        st.write("By Duration", imdb[imdb['duration by min'] <= duration  ] )
-    if movie :
-        st.write( "By movies", imdb[imdb["title"].isin(movie)])
-    if choose_actors : 
-        st.write("By actors" , imdb[imdb['actors'].explode().str.contains(",".join(choose_actors))])
-    if country:
-        st.write("By Country" , imdb[imdb['Origin country'].explode().str.contains("".join(country))])
-    if category:
-        st.write("By Category" , imdb[imdb['genre'].explode().str.contains("".join(category))])
-    if language :
-        st.write("By language", imdb[imdb['Origin language'].explode().str.contains("".join(language))])
-    if note :
-        st.write("By score ", imdb[imdb['note'] <= int(note) ])
+# Filtres 
+    for i in choose_actors :
+        mask &= imdb['actors'].str.contains(i)
+    for i in country:
+        mask &= imdb['Origin country'].str.contains(i)
+    for i in category :
+        mask &= imdb['genre'].str.contains(i)
+    for i in language :
+        mask &= imdb['Origin language'].str.contains(i)
+    if duration > 60:
+        mask &= imdb['duration by min'] <= int(duration)
+    if note > 8 :
+        mask &= imdb['note'] <= int(note)
+    if movie : 
+        mask &= imdb['title'].isin(movie)
+    st.write("With filters :", imdb[mask])
 
 # Partie bonus : Modélisation de nos données 
 modelisation = st.sidebar.checkbox("Modelisation")
 
 if modelisation : 
-
-   
     st.bar_chart(imdb['duration by min'])
     st.bar_chart(imdb['note'])
     st.bar_chart(imdb['movie cost'])
-    
    
 
 contact = st.sidebar.checkbox('Others')

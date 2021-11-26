@@ -1,8 +1,6 @@
 # Les imports : 
 import streamlit as st
 import pandas as pd
-import matplotlib.pyplot
-
 # Fonction pour charger les données :
 
 @st.cache

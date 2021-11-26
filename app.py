@@ -1,6 +1,7 @@
 # Les imports : 
 import streamlit as st
 import pandas as pd
+import numpy as np 
 # Fonction pour charger les données :
 
 @st.cache
@@ -47,7 +48,7 @@ for i in imdb["Origin language"]:
 # For my slide bar duration between 60min and 400min  
 time = [i for i in range (60,400, 30)] 
 # For rating movie filter 
-score = [i for i in range(8,11,1)]
+score = [i for i in np.arange(8,10.5,0.5)]
 
 
 
@@ -60,20 +61,22 @@ st.subheader('Movies explorer:')
 ## --------------  ## ----------------------- Déclaaration des inputs :
 
 # si le checkbox est sur all alors Datafram complet 
-all = st.sidebar.checkbox("All")
-if all :
+all = st.sidebar.radio("Choose options :", ("All","Filters", 'Modelisation',"Others"))
+if all == "All" :
     st.write( "Our all Liberary below! ",imdb)
 
-# Checkbox avec les choix de filtres 
-checkmovie = st.sidebar.checkbox("Filters")
-if checkmovie :
+if all == "Filters":
     duration = st.sidebar.select_slider("By duration", time )
     movie = st.sidebar.multiselect("By movies title", set(list_movies))
     choose_actors = st.sidebar.multiselect('Select your actors',set(list_actors))
     country = st.sidebar.multiselect("Country", set(list_country))
     category = st.sidebar.multiselect('Category',set(list_category))
     language = st.sidebar.multiselect('Language', set(list_language))
-    note = st.sidebar.select_slider('By score', score )
+    note = st.sidebar.selectbox('By score', score )
+
+
+# Checkbox avec les choix de filtres 
+
     
 # Creation des Df avec les différents filtres ( Par Durée, par films, par acteurs, par pays, par langue ou par catégorie)
     
@@ -98,16 +101,14 @@ if checkmovie :
     st.write("With filters :", imdb[mask])
 
 # Partie bonus : Modélisation de nos données 
-modelisation = st.sidebar.checkbox("Modelisation")
 
-if modelisation : 
+if all == "Modelisation" : 
     st.bar_chart(imdb['duration by min'])
     st.bar_chart(imdb['note'])
     st.bar_chart(imdb['movie cost'])
    
 
-contact = st.sidebar.checkbox('Others')
-if contact:
+if all == "Others":
     st.map()
 
 

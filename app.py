@@ -97,7 +97,7 @@ if modelisation :
     st.bar_chart(imdb['duration by min'])
     st.bar_chart(imdb['note'])
     st.bar_chart(imdb['movie cost'])
-    st.subheader("Movies duration by cost :")
+    
    
 
 contact = st.sidebar.checkbox('Others')

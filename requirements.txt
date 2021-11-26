@@ -1,6 +1,5 @@
 
 # Package à installer 
 streamlit 
-matplotlib.pyplot 
 pandas  
 

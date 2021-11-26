@@ -33,13 +33,13 @@ for i in imdb['Origin country']:
     for j in i.split(','):
         list_country.append(j)
 
-# I convert my Datafram category colomn to list 
+# I convert my Datafram category colomn in a list 
 list_category = []
 for i in imdb["genre"]:
     for j in i.split(','):
         list_category.append(j)
 
-# I convert my Datafram language colomn to list 
+# I convert my Datafram language colomn in a list 
 list_language = []
 for i in imdb["Origin language"]:
     for j in i.split(","):
@@ -77,15 +77,22 @@ if checkmovie :
     
 # Creation des Df avec les différents filtres ( Par Durée, par films, par acteurs, par pays, par langue ou par catégorie)
     
-
+    groupe = duration or movie or choose_actors or country or category or language or note
     
-    st.write("By Duration", imdb[imdb['duration by min'] <= duration  ] )
-    st.write( "By movies", imdb[imdb["title"].isin(movie)])
-    st.write("By actors" , imdb[imdb['actors'].isin(choose_actors)])
-    st.write("By Country" , imdb[imdb['Origin country'].isin(country)])
-    st.write("By Category" , imdb[imdb['genre'].isin(category)])
-    st.write("By language", imdb[imdb['Origin language'].isin(language)])
-    st.write("By score ", imdb[imdb['note'] <= int(note) ])
+    if duration > 60 :
+        st.write("By Duration", imdb[imdb['duration by min'] <= duration  ] )
+    if movie :
+        st.write( "By movies", imdb[imdb["title"].isin(movie)])
+    if choose_actors : 
+        st.write("By actors" , imdb[imdb['actors'].explode().str.contains(",".join(choose_actors))])
+    if country:
+        st.write("By Country" , imdb[imdb['Origin country'].explode().str.contains("".join(country))])
+    if category:
+        st.write("By Category" , imdb[imdb['genre'].explode().str.contains("".join(category))])
+    if language :
+        st.write("By language", imdb[imdb['Origin language'].explode().str.contains("".join(language))])
+    if note :
+        st.write("By score ", imdb[imdb['note'] <= int(note) ])
 
 # Partie bonus : Modélisation de nos données 
 modelisation = st.sidebar.checkbox("Modelisation")

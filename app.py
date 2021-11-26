@@ -122,8 +122,8 @@ if all == "Filters":
         mask &= imdb['title'].isin(movie)
     st.write("With filters :", imdb[mask])
     
-    stream_choose = st.sidebar.selectbox('Your Original Trailer selection: ' ,  imdb[mask])
-    stream_button = st.sidebar.button("Clic to watch ")
+    stream_choose = st.sidebar.selectbox('Your movie selection: ' ,  imdb[mask])
+    stream_button = st.sidebar.button("Clic to watch in streaming ")
 # Partie bonus : Modélisation de nos données 
 
 

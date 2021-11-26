@@ -50,7 +50,8 @@ time = [i for i in range (60,400, 30)]
 # For rating movie filter 
 score = [i for i in np.arange(8,10.5,0.5)]
 
-
+# Je supprime la colonne 0 
+imdb.drop(df.columns[0], axis=1)
 
 # Titre de la page
 st.title('Make your movie:')

@@ -48,8 +48,9 @@ for i in imdb["Origin language"]:
     for j in i.split(","):
         list_language.append(j)
 
-# For my slide bar duration between 60min and 400min 
+# For my slide bar duration between 60min and 400min  
 time = [i for i in range (60,400, 30)] 
+# For rating movie filter 
 score = [i for i in range(11)]
 
 
@@ -124,4 +125,5 @@ st.markdown(
 
 # data_container = st.container()
 # with data_container :
-# A utiliser pour faire un seul Datafram filtrable avec les conditions ? 
+# A utiliser pour faire un seul Datafram filtrable avec les conditions ?
+# ou plutot st.empty() => Manipule un seul élement ?  

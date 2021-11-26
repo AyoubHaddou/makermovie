@@ -1,5 +1,6 @@
 
 # Package à installer 
-python-3.10.0
-streamlit
-pandas 
+
+streamlit==1.2.0
+pandas==1.2.3
+numpy1.18.5

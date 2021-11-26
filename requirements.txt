@@ -1,5 +1,6 @@
 
 # Package à installer 
-pip install streamlite 
+pip install streamlit
 pip install gunicorn 
 pip install matplotlib 
+pip install pandas 

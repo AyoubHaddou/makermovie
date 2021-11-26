@@ -1,5 +1,5 @@
 
 # Package à installer 
-streamlit 
-pandas  
+python-3.10.0
+streamlit 1.2.0
 

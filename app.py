@@ -1,6 +1,7 @@
 # Les imports : 
 import streamlit as st
 import pandas as pd
+import matplotlib.pyplot
 
 # Fonction pour charger les données :
 
@@ -97,6 +98,17 @@ if modelisation :
     st.bar_chart(imdb['duration by min'])
     st.bar_chart(imdb['note'])
     st.bar_chart(imdb['movie cost'])
+    fig, ax = plt.subplots()
+    ax.scatter(list(imdb['duration by min']), imdb['movie cost'])
+    st.pyplot(fig)
+    st.subheader("Movie price by movie score :")
+    fig, ax = plt.subplots()
+    ax.scatter(imdb['note'], imdb['movie cost'])
+    st.pyplot(fig)
+    fig, ax = plt.subplots()
+    st.subheader("Just training:")
+    ax.plot(list(imdb['duration by min']), imdb['movie cost'])
+    st.pyplot(fig) 
     
    
 

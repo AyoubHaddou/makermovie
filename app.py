@@ -52,6 +52,8 @@ score = [i for i in np.arange(8,10.5,0.5)]
 
 # Je supprime la colonne 0 
 imdb.drop(imdb.columns[0], axis=1, inplace=True)
+# J'arrondie la colonne note a 0.1
+imdb['note'] = round(imdb['note'], 1)
 
 # Titre de la page
 st.title('Make your movie:')

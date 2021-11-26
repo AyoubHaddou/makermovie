@@ -1,6 +1,6 @@
 
 # Package à installer 
-streamlit
-gunicorn 
-matplotlib 
-pandas 
+streamlit 
+matplotlib.pyplot 
+pandas  
+

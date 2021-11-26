@@ -76,11 +76,16 @@ with col3:
     st.subheader("Top - 3")
     st.write("Le parrain - Original Trailer")
     st.video("https://imdb-video.media-imdb.com/vi1158527769/1434659607842-pgv4ql-1564710232825.mp4?Expires=1638049348&Signature=GbVqeeVDcF8FtN933wd3MhHd5b2YMBuvtDQRbDLE2vCfn~hdqNpDRxttFF4bOPU4qv68dfM5EqPF7xIUdKfPXdd2Jy5Q449X9uYMrwSJqznMMCma-ajm4VOO-WFQr2VcwWffa-r7b5POYpYUN5kGQvgCA5U7HLf3kjY27kIcaA73p9MR5FfFGkTxiQEmV31xD55kBFm2L~KM5WMGvU7leYpuSuAj9c89t2OAwTLaIxQaKfZCnwPSOyJQQKPzCVhENNbgnT~nJF8Tjn72Q3ceQLCmT8HwASQfTxDDN1-pfQfZfAEYLEJoTN7hJbN6lChidJc5CrDv1qiOAsC~F7iLuw__&Key-Pair-Id=APKAIFLZBVQZ24NQH3KA")
-# si le checkbox est sur all alors Datafram complet 
+
+# Boutons sidebar pour la navigation dans le site 
 all = st.sidebar.radio("Choose options :", ("All","Filters", 'Modelisation',"Others"))
+
+
+# All pour afficher le df complet 
 if all == "All" :
     st.write( "Our all Liberary below! ",imdb)
 
+# Selections pour les filtres 
 if all == "Filters":
     duration = st.sidebar.select_slider("By duration", time )
     movie = st.sidebar.multiselect("By movies title", set(list_movies))
@@ -88,24 +93,13 @@ if all == "Filters":
     country = st.sidebar.multiselect("Country", set(list_country))
     category = st.sidebar.multiselect('Category',set(list_category))
     language = st.sidebar.multiselect('Language', set(list_language))
-    note = st.sidebar.selectbox('By score', score )
+    note = st.sidebar.select_slider('By score', score )
     
 
-
-
-# Checkbox avec les choix de filtres 
-
-    
-# Creation des Df avec les différents filtres ( Par Durée, par films, par acteurs, par pays, par langue ou par catégorie)
-    
-# Instentiation de mon mask que j'utilise pour filtre mon df 
-
-   
-
-    
+# Instentiation de mon maskf 
     mask = pd.Series(True, index=imdb.index)
     
-# Filtres 
+# Creation des conditions dans les mask ( Par Durée, par films, par acteurs, par pays, par langue ou par catégorie)
     for i in choose_actors :
         mask &= imdb['actors'].str.contains(i)
     for i in country:
@@ -117,22 +111,23 @@ if all == "Filters":
     if duration > 60:
         mask &= imdb['duration by min'] <= int(duration)
     if note > 8 :
-        mask &= imdb['note'] <= int(note)
+        mask &= imdb['note'] <= note
     if movie : 
         mask &= imdb['title'].isin(movie)
     st.write("With filters :", imdb[mask])
     
+# Partie a completer plus tard. Inserer liens streaming ou Bande annonce
     stream_choose = st.sidebar.selectbox('Your movie selection: ' ,  imdb[mask])
     stream_button = st.sidebar.button("Clic to watch in streaming ")
+
+
 # Partie bonus : Modélisation de nos données 
-
-
     if all == "Modelisation" : 
         st.bar_chart(imdb['duration by min'])
         st.bar_chart(imdb['note'])
         st.bar_chart(imdb['movie cost'])
     
- 
+ # Partie ou je peux essayer des trucs
     if all == "Others":
         st.map()
 

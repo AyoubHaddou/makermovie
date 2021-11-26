@@ -1,0 +1,5 @@
+
+# Package à installer 
+pip install streamlite 
+pip install gunicorn 
+pip install matplotlib 

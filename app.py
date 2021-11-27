@@ -3,6 +3,7 @@ from os import waitpid
 import streamlit as st
 import pandas as pd
 import numpy as np 
+import webbrowser
 # Fonction pour charger les données :
 
 @st.cache
@@ -63,19 +64,6 @@ st.subheader('Movies explorer:')
 
 
 ## --------------  ## ----------------------- Déclaaration des inputs :
-col1, col2, col3 = st.columns(3)
-with col1:
-    st.subheader("Top - 1")
-    st.write("Jai Bhin - Trailer song")
-    st.video("https://www.youtube.com/watch?v=YwVHHZNtdKU")
-with col2:
-    st.subheader("Top - 2")
-    st.write("Les évadés - Original Trailer")
-    st.video("https://www.youtube.com/watch?v=2e8Otbbcowc")
-with col3:
-    st.subheader("Top - 3")
-    st.write("Le parrain - Original Trailer")
-    st.video("https://imdb-video.media-imdb.com/vi1158527769/1434659607842-pgv4ql-1564710232825.mp4?Expires=1638049348&Signature=GbVqeeVDcF8FtN933wd3MhHd5b2YMBuvtDQRbDLE2vCfn~hdqNpDRxttFF4bOPU4qv68dfM5EqPF7xIUdKfPXdd2Jy5Q449X9uYMrwSJqznMMCma-ajm4VOO-WFQr2VcwWffa-r7b5POYpYUN5kGQvgCA5U7HLf3kjY27kIcaA73p9MR5FfFGkTxiQEmV31xD55kBFm2L~KM5WMGvU7leYpuSuAj9c89t2OAwTLaIxQaKfZCnwPSOyJQQKPzCVhENNbgnT~nJF8Tjn72Q3ceQLCmT8HwASQfTxDDN1-pfQfZfAEYLEJoTN7hJbN6lChidJc5CrDv1qiOAsC~F7iLuw__&Key-Pair-Id=APKAIFLZBVQZ24NQH3KA")
 
 # Boutons sidebar pour la navigation dans le site 
 all = st.sidebar.radio("Choose options :", ("All","Filters", 'Modelisation',"Others"))
@@ -84,6 +72,21 @@ all = st.sidebar.radio("Choose options :", ("All","Filters", 'Modelisation',"Oth
 # All pour afficher le df complet 
 if all == "All" :
     st.write( "Our all Liberary below! ",imdb)
+
+    col1, col2, col3 = st.columns(3)
+    with col1:
+        st.subheader("Top - 1")
+        st.write("Jai Bhin - Trailer song")
+        st.video("https://www.youtube.com/watch?v=YwVHHZNtdKU")
+    with col2:
+        st.subheader("Top - 2")
+        st.write("Les évadés - Original Trailer")
+        st.video("https://www.youtube.com/watch?v=2e8Otbbcowc")
+    with col3:
+        st.subheader("Top - 3 ")
+        st.write("From IMDB.com")
+        st.write("Le parrain - Original Trailer")
+        st.video("https://imdb-video.media-imdb.com/vi1158527769/1434659607842-pgv4ql-1564710232825.mp4?Expires=1638049348&Signature=GbVqeeVDcF8FtN933wd3MhHd5b2YMBuvtDQRbDLE2vCfn~hdqNpDRxttFF4bOPU4qv68dfM5EqPF7xIUdKfPXdd2Jy5Q449X9uYMrwSJqznMMCma-ajm4VOO-WFQr2VcwWffa-r7b5POYpYUN5kGQvgCA5U7HLf3kjY27kIcaA73p9MR5FfFGkTxiQEmV31xD55kBFm2L~KM5WMGvU7leYpuSuAj9c89t2OAwTLaIxQaKfZCnwPSOyJQQKPzCVhENNbgnT~nJF8Tjn72Q3ceQLCmT8HwASQfTxDDN1-pfQfZfAEYLEJoTN7hJbN6lChidJc5CrDv1qiOAsC~F7iLuw__&Key-Pair-Id=APKAIFLZBVQZ24NQH3KA")
 
 # Selections pour les filtres 
 if all == "Filters":
@@ -118,18 +121,31 @@ if all == "Filters":
     
 # Partie a completer plus tard. Inserer liens streaming ou Bande annonce
     stream_choose = st.sidebar.selectbox('Your movie selection: ' ,  imdb[mask])
-    stream_button = st.sidebar.button("Clic to watch in streaming ")
+
+
+    stream_button_trailer = st.sidebar.button("Clic to redirect youtube trailer")
+    if stream_button_trailer :
+        st.warning('En cours de developpement')
+        webbrowser.open_new_tab("https://www.youtube.com/results?search_query=" + stream_choose.lower().replace(' ',""))
+ 
+    stream_button_watch = st.sidebar.button("Clic to watch in streaming ")
+    if stream_button_watch:
+        st.warning('En cours de developpement')
+        st.video("https://www.youtube.com/watch?v=rjrcALUu8LY")
+        
+
+
 
 
 # Partie bonus : Modélisation de nos données 
-    if all == "Modelisation" : 
-        st.bar_chart(imdb['duration by min'])
-        st.bar_chart(imdb['note'])
-        st.bar_chart(imdb['movie cost'])
+if all == "Modelisation" : 
+    st.bar_chart(imdb['duration by min'])
+    st.bar_chart(imdb['note'])
+    st.bar_chart(imdb['movie cost'])
     
  # Partie ou je peux essayer des trucs
-    if all == "Others":
-        st.map()
+if all == "Others":
+    st.map()
 
 
 

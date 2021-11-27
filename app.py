@@ -73,6 +73,7 @@ all = st.sidebar.radio("Choose options :", ("All","Filters", 'Modelisation',"Oth
 if all == "All" :
     st.write( "Our all Liberary below! ",imdb)
 
+    st.subheader('TOP 3 movies from IMDB:')
     col1, col2, col3 = st.columns(3)
     with col1:
         st.subheader("Top - 1")
@@ -125,12 +126,12 @@ if all == "Filters":
 
     stream_button_trailer = st.sidebar.button("Clic to redirect youtube trailer")
     if stream_button_trailer :
-        st.warning('En cours de developpement')
+        st.warning('Content below is coming soon')
         webbrowser.open_new_tab("https://www.youtube.com/results?search_query=" + stream_choose.lower().replace(' ',""))
  
     stream_button_watch = st.sidebar.button("Clic to watch in streaming ")
     if stream_button_watch:
-        st.warning('En cours de developpement')
+        st.warning('Content below is coming soon')
         st.video("https://www.youtube.com/watch?v=rjrcALUu8LY")
         
 

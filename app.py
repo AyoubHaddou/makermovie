@@ -3,7 +3,6 @@ from os import waitpid
 import streamlit as st
 import pandas as pd
 import numpy as np 
-import webbrowser
 # Fonction pour charger les données :
 
 @st.cache
@@ -15,7 +14,7 @@ def load_data(nrows):
     return data
 
 # Import du CSV 
-imdb = pd.read_csv("datafram.csv")
+imdb = pd.read_csv("imdb_video.csv")
 
 
 ## --------------  ## -----------------------Déclaration de mes variables : 
@@ -61,6 +60,9 @@ imdb['note'] = round(imdb['note'], 1)
 st.title('Make your movie:')
 st.sidebar.subheader('Filters :')
 st.subheader('Movies explorer:')
+
+# Je change les NaN de ma colonne video par Ghostbuster (a faire plus tard : Creer condition pour afficher message pas de bande annonce si Nan)
+imdb['video'].fillna('https://www.imdb.com/video/vi637322009?playlistId=tt4513678&ref_=tt_pr_ov_vi',  inplace=True)
 
 
 ## --------------  ## ----------------------- Déclaaration des inputs :
@@ -120,19 +122,20 @@ if all == "Filters":
         mask &= imdb['title'].isin(movie)
     st.write("With filters :", imdb[mask])
     
-# Partie a completer plus tard. Inserer liens streaming ou Bande annonce
+#  Inserer liens streaming ou Bande annonce
     stream_choose = st.sidebar.selectbox('Your movie selection: ' ,  imdb[mask])
 
 
     stream_button_trailer = st.sidebar.button("Clic to redirect youtube trailer")
     if stream_button_trailer :
-        st.warning('Content below is coming soon')
-        webbrowser.open_new_tab("https://www.youtube.com/results?search_query=" + stream_choose.lower().replace(' ',""))
+        vid = imdb["video"][imdb['title'].str.contains(stream_choose)]
+        st.video(vid.iloc[0])
+        
  
     stream_button_watch = st.sidebar.button("Clic to watch in streaming ")
     if stream_button_watch:
         st.warning('Content below is coming soon')
-        st.video("https://www.youtube.com/watch?v=rjrcALUu8LY")
+        st.video("https://www.youtube.com/watch?v=0QKGhig31Rw&t=2s")
         
 
 

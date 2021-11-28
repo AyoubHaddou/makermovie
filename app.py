@@ -143,11 +143,15 @@ if all == "Filters":
 
 # Partie bonus : Modélisation de nos données 
 if all == "Modelisation" : 
-    st.bar_chart(imdb['duration'])
-    st.bar_chart(imdb['note'])
-    st.bar_chart(imdb['movie cost'])
-    st.bar_chart([i for i in list_country])
+    country = [i for i in list_country]
+    st.bar_chart(imdb.groupby('Origin country')['note'].mean())
+    st.bar_chart(imdb.groupby('Origin country')['duration','movie cost'].mean())
+    st.bar_chart(imdb.groupby('Origin country')['duration'].mean())
+    st.bar_chart(imdb.groupby(['note']).mean())
+    st.bar_chart(imdb.groupby(['duration']).mean())
+    st.bar_chart(imdb['note'].describe())
 
+    # st.bar_chart(imdb.sort_values(by = ["Origin country", "genre"], ascending = False ))
     
  # Partie ou je peux essayer des trucs
 if all == "Others":

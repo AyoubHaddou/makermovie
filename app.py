@@ -7,14 +7,14 @@ import numpy as np
 
 @st.cache
 def load_data(nrows):
-    data = pd.read_csv("datafram.csv", nrows=nrows)
+    data = pd.read_csv("imdb_movie.csv", nrows=nrows)
     lowercase = lambda x: str(x).lower()
     data.rename(lowercase, axis='columns', inplace=True)
     data[DATE_COLUMN] = pd.to_datetime(data[DATE_COLUMN])
     return data
 
 # Import du CSV 
-imdb = pd.read_csv("imdb_video.csv")
+imdb = pd.read_csv("imdb_movie.csv")
 
 
 ## --------------  ## -----------------------Déclaration de mes variables : 
@@ -90,6 +90,7 @@ if all == "All" :
         st.write("From IMDB.com")
         st.write("Le parrain - Original Trailer")
         st.video("https://imdb-video.media-imdb.com/vi1158527769/1434659607842-pgv4ql-1564710232825.mp4?Expires=1638049348&Signature=GbVqeeVDcF8FtN933wd3MhHd5b2YMBuvtDQRbDLE2vCfn~hdqNpDRxttFF4bOPU4qv68dfM5EqPF7xIUdKfPXdd2Jy5Q449X9uYMrwSJqznMMCma-ajm4VOO-WFQr2VcwWffa-r7b5POYpYUN5kGQvgCA5U7HLf3kjY27kIcaA73p9MR5FfFGkTxiQEmV31xD55kBFm2L~KM5WMGvU7leYpuSuAj9c89t2OAwTLaIxQaKfZCnwPSOyJQQKPzCVhENNbgnT~nJF8Tjn72Q3ceQLCmT8HwASQfTxDDN1-pfQfZfAEYLEJoTN7hJbN6lChidJc5CrDv1qiOAsC~F7iLuw__&Key-Pair-Id=APKAIFLZBVQZ24NQH3KA")
+        
 
 # Selections pour les filtres 
 if all == "Filters":
@@ -129,23 +130,24 @@ if all == "Filters":
     stream_button_trailer = st.sidebar.button("Clic to redirect youtube trailer")
     if stream_button_trailer :
         vid = imdb["video"][imdb['title'].str.contains(stream_choose)]
+        st.write('Clic below if the video doesn\'t start ')
+        st.write(vid.iloc[0])
         st.video(vid.iloc[0])
         
  
     stream_button_watch = st.sidebar.button("Clic to watch in streaming ")
     if stream_button_watch:
-        st.warning('Content below is coming soon')
+        st.warning('Correct content below is coming soon')
         st.video("https://www.youtube.com/watch?v=0QKGhig31Rw&t=2s")
         
 
-
-
-
 # Partie bonus : Modélisation de nos données 
 if all == "Modelisation" : 
-    st.bar_chart(imdb['duration by min'])
+    st.bar_chart(imdb['duration'])
     st.bar_chart(imdb['note'])
     st.bar_chart(imdb['movie cost'])
+    st.bar_chart([i for i in list_country])
+
     
  # Partie ou je peux essayer des trucs
 if all == "Others":

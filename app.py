@@ -116,7 +116,7 @@ if all == "Filters":
     for i in language :
         mask &= imdb['Origin language'].str.contains(i)
     if duration > 60:
-        mask &= imdb['duration by min'] <= int(duration)
+        mask &= imdb['duration'] <= int(duration)
     if note > 8 :
         mask &= imdb['note'] <= note
     if movie : 

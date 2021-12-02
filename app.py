@@ -3,8 +3,9 @@ from os import waitpid
 import streamlit as st
 import pandas as pd
 import numpy as np 
-# Fonction pour charger les données :
 
+
+# Fonction pour charger les données sur streamlit :
 @st.cache
 def load_data(nrows):
     data = pd.read_csv("imdb_movie.csv", nrows=nrows)
@@ -13,7 +14,7 @@ def load_data(nrows):
     data[DATE_COLUMN] = pd.to_datetime(data[DATE_COLUMN])
     return data
 
-# Import du CSV 
+# Import du CSV dans mon Df
 imdb = pd.read_csv("imdb_movie.csv")
 
 
@@ -46,22 +47,25 @@ for i in imdb["Origin language"]:
     for j in i.split(","):
         list_language.append(j)
 
-# For my slide bar duration between 60min and 400min  
+# For my slide bar duration (slider between 60min and 400min)
 time = [i for i in range (60,400, 30)] 
-# For rating movie filter 
+# For rating movie filter (not slider between 8,10 and 10)
 score = [i for i in np.arange(8,10.5,0.5)]
 
 # Je supprime la colonne 0 
 imdb.drop(imdb.columns[0], axis=1, inplace=True)
-# J'arrondie la colonne note a 0.1
-imdb['note'] = round(imdb['note'], 1)
+
+# # J'arrondie la colonne note a 0.1 
+# (fonctionnne pas, a refaire)
+# imdb['note'] = round(imdb['note'], 1)
 
 # Titre de la page
 st.title('Make your movie:')
 st.sidebar.subheader('Filters :')
 st.subheader('Movies explorer:')
 
-# Je change les NaN de ma colonne video par Ghostbuster (a faire plus tard : Creer condition pour afficher message pas de bande annonce si Nan)
+# Je change les NaN de ma colonne video par la bande annonce de Ghostbuster 
+# (a faire plus tard : Creer condition pour afficher message pas de bande annonce dispo pour les NaN)
 imdb['video'].fillna('https://www.imdb.com/video/vi637322009?playlistId=tt4513678&ref_=tt_pr_ov_vi',  inplace=True)
 
 
@@ -103,7 +107,7 @@ if all == "Filters":
     note = st.sidebar.select_slider('By score', score )
     
 
-# Instentiation de mon maskf 
+# Instentciation de mon mask
     mask = pd.Series(True, index=imdb.index)
     
 # Creation des conditions dans les mask ( Par Durée, par films, par acteurs, par pays, par langue ou par catégorie)
@@ -123,7 +127,7 @@ if all == "Filters":
         mask &= imdb['title'].isin(movie)
     st.write("With filters :", imdb[mask])
     
-#  Inserer liens streaming ou Bande annonce
+#  Inserer la selection du mask dans recherche de streaming ou Bande annonce
     stream_choose = st.sidebar.selectbox('Your movie selection: ' ,  imdb[mask])
 
 
@@ -162,7 +166,7 @@ if all == "Others":
 #Markdown 
 st.markdown(
 
-    " ###### Made by Ayoub  "
+    " ###### Made by Pirate Ayoub.py  "
 )
 
 # data_container = st.container()

@@ -157,7 +157,7 @@ if all == "Modelisation" :
 
     # st.bar_chart(imdb.sort_values(by = ["Origin country", "genre"], ascending = False ))
     
- # Partie ou je peux essayer des trucs
+ # Partie ou je peux essayer des trucscon
 if all == "Others":
     st.map()
 

@@ -1,5 +1,4 @@
 # Les imports : 
-from os import waitpid
 import streamlit as st
 import pandas as pd
 import numpy as np 
@@ -19,6 +18,9 @@ imdb = pd.read_csv("imdb_movie.csv")
 
 
 ## --------------  ## -----------------------Déclaration de mes variables : 
+
+# Wide mode (front)
+st.set_page_config(layout="wide")
 
 # I Convert my Datafram title colomn to list 
 list_movies = imdb['title'].tolist()
@@ -93,17 +95,17 @@ if all == "All" :
         st.subheader("Top - 3 ")
         st.write("From IMDB.com")
         st.write("Le parrain - Original Trailer")
-        st.video("https://imdb-video.media-imdb.com/vi1158527769/1434659607842-pgv4ql-1564710232825.mp4?Expires=1638049348&Signature=GbVqeeVDcF8FtN933wd3MhHd5b2YMBuvtDQRbDLE2vCfn~hdqNpDRxttFF4bOPU4qv68dfM5EqPF7xIUdKfPXdd2Jy5Q449X9uYMrwSJqznMMCma-ajm4VOO-WFQr2VcwWffa-r7b5POYpYUN5kGQvgCA5U7HLf3kjY27kIcaA73p9MR5FfFGkTxiQEmV31xD55kBFm2L~KM5WMGvU7leYpuSuAj9c89t2OAwTLaIxQaKfZCnwPSOyJQQKPzCVhENNbgnT~nJF8Tjn72Q3ceQLCmT8HwASQfTxDDN1-pfQfZfAEYLEJoTN7hJbN6lChidJc5CrDv1qiOAsC~F7iLuw__&Key-Pair-Id=APKAIFLZBVQZ24NQH3KA")
+        st.video("https://www.youtube.com/watch?v=sY1S34973zA")
         
 
 # Selections pour les filtres 
 if all == "Filters":
     duration = st.sidebar.select_slider("By duration", time )
-    movie = st.sidebar.multiselect("By movies title", set(list_movies))
-    choose_actors = st.sidebar.multiselect('Select your actors',set(list_actors))
     country = st.sidebar.multiselect("Country", set(list_country))
     category = st.sidebar.multiselect('Category',set(list_category))
     language = st.sidebar.multiselect('Language', set(list_language))
+    choose_actors = st.sidebar.multiselect('Select your actors',set(list_actors))
+    movie = st.sidebar.multiselect("By movies title", set(list_movies))
     note = st.sidebar.select_slider('By score', score )
     
 

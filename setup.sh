@@ -1,10 +1,11 @@
 cd ~/.streamlit/
 
-echo "\[theme]
-primaryColor='#584BFF'
-backgroundColor='#0E1117'
-secondaryBackgroundColor='#262730'
-textColor='#FAFAFA'
+echo "\
+[theme]\n\
+primaryColor='#584BFF'\n\
+backgroundColor='#0E1117'\n\
+secondaryBackgroundColor='#262730'\n\
+textColor='#FAFAFA'\n\
 font='sans serif'\n\
 [server]\n\
 headless = true\n\
